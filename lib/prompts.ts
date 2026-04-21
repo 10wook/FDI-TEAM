@@ -4,7 +4,7 @@ import { SECTIONS, SECTION_DESCRIPTIONS } from "./sections";
 /**
  * FDI 2026 Symposium T05 "Building AI Data Infrastructure"
  * 세션 원본 텍스트 추출본. 기획자가 전달한 MD 파일 전문을 그대로 삽입합니다.
- * 이 문자열은 Anthropic prompt caching 대상이 되므로 동적 요소를 섞지 않습니다.
+ * 동적 요소를 섞지 않아 순수 정적 문자열로 유지합니다 (후속 패스에서 Gemini context caching 도입 검토).
  */
 const SESSION_MATERIAL = `# Building AI Data Infrastructure 발표 정리
 
@@ -159,8 +159,7 @@ function buildSectionCatalog(): string {
 }
 
 /**
- * 시스템 프롬프트 조립. 순수 함수이므로 호출마다 동일한 문자열을 반환해
- * Anthropic prompt caching(ephemeral) 대상이 됩니다.
+ * 시스템 프롬프트 조립. 순수 함수이므로 호출마다 동일한 문자열을 반환합니다.
  */
 export function buildSystemPrompt(): string {
   return `당신은 "Wrapsody 소개 사이트"의 AI 가이드 챗봇입니다.
