@@ -51,6 +51,12 @@
   .em-lead {
     @apply font-semibold text-cyan-200;
   }
+  /** 누끼 이미지: 윤곽 따른 그림자 + 은은한 시안/흰 광(입체감) */
+  .speaker-cutout {
+    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.55))
+      drop-shadow(0 0 40px rgba(34, 211, 238, 0.22))
+      drop-shadow(0 -2px 24px rgba(192, 38, 211, 0.08));
+  }
 }
 
 * {

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Sparkles, ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/shared/SectionWrapper";
 import IntroPageHeroParallax from "@/components/pages/IntroPageHeroParallax";
@@ -137,25 +138,60 @@ export default function IntroPage({
         className="mt-12"
         revealIndex={1}
       >
-        <div className="grid grid-cols-3 gap-6">
-          <div className="border-l-2 border-cyan-500/40 pl-4">
-            <div className="mb-2 font-mono text-xs uppercase tracking-widest text-slate-500">
-              발표자
+        <div className="overflow-hidden rounded-2xl border border-cyan-500/25 bg-slate-950/60 p-6 shadow-[inset_0_0_0_1px_rgba(34,211,238,0.08),0_0_48px_-20px_rgba(6,182,212,0.2)] sm:p-8">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-10">
+            <div className="relative mx-auto w-full max-w-[260px] shrink-0 lg:mx-0">
+              <div
+                className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-gradient-to-b from-cyan-500/15 via-fuchsia-500/10 to-transparent opacity-90 blur-2xl"
+                aria-hidden
+              />
+              <div className="relative">
+                <div
+                  className="pointer-events-none absolute inset-0 -z-10 scale-105 rounded-3xl border border-cyan-400/20 bg-gradient-to-t from-cyan-500/5 to-transparent"
+                  aria-hidden
+                />
+                <Image
+                  src="/images/kim-yonggil-speaker.png"
+                  alt="T05 Building AI Data Infrastructure — 발표자 김용길 본부장"
+                  width={1292}
+                  height={1879}
+                  className="speaker-cutout h-auto w-full object-contain"
+                  sizes="(max-width: 1024px) 70vw, 260px"
+                  priority={false}
+                />
+              </div>
             </div>
-            <div className="text-sm font-medium text-slate-200">김용길 본부장</div>
-          </div>
-          <div className="border-l-2 border-cyan-500/40 pl-4">
-            <div className="mb-2 font-mono text-xs uppercase tracking-widest text-slate-500">
-              세션
-            </div>
-            <div className="text-sm font-medium text-slate-200">Track 5</div>
-          </div>
-          <div className="border-l-2 border-cyan-500/40 pl-4">
-            <div className="mb-2 font-mono text-xs uppercase tracking-widest text-slate-500">
-              행사
-            </div>
-            <div className="text-sm font-medium text-slate-200">
-              Fasoo FDI 2026
+            <div className="min-w-0 flex-1">
+              <div className="mb-6">
+                <p className="mb-1 font-mono text-xs uppercase tracking-widest text-cyan-500/80">
+                  발표자
+                </p>
+                <h3 className="font-display text-2xl font-bold text-slate-100 sm:text-3xl">
+                  김용길 본부장
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                  Fasoo FDI 2026 · Track 5 ·{" "}
+                  <span className="text-cyan-200/90">
+                    Building AI Data Infrastructure
+                  </span>
+                </p>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div className="border-l-2 border-cyan-500/50 pl-4">
+                  <div className="mb-1 font-mono text-xs uppercase tracking-widest text-slate-500">
+                    세션
+                  </div>
+                  <div className="text-sm font-semibold text-slate-200">Track 5</div>
+                </div>
+                <div className="border-l-2 border-cyan-500/50 pl-4">
+                  <div className="mb-1 font-mono text-xs uppercase tracking-widest text-slate-500">
+                    행사
+                  </div>
+                  <div className="text-sm font-semibold text-slate-200">
+                    Fasoo FDI 2026
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
