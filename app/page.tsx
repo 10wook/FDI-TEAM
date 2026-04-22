@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
@@ -17,16 +18,14 @@ import AgentsPage from "@/components/pages/AgentsPage";
 import FiresidePage from "@/components/pages/FiresidePage";
 import ConclusionPage from "@/components/pages/ConclusionPage";
 import ChatPanel, { type ChatPanelHandle } from "@/components/chat/ChatPanel";
+import { MainScrollContext } from "@/contexts/MainScrollContext";
+import { pageMorphVariants } from "@/lib/page-motion";
 import { PAGES, getPage, type PageId } from "@/lib/pages";
-
-type TransitionState = "idle" | "exiting" | "entering";
 
 export default function Home() {
   const [currentPageId, setCurrentPageId] = useState<PageId>("intro");
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
-  const [transitionState, setTransitionState] =
-    useState<TransitionState>("idle");
-  const mainRef = useRef<HTMLElement>(null);
+  const mainRef = useRef<HTMLElement | null>(null);
   const chatRef = useRef<ChatPanelHandle>(null);
 
   const currentPage = getPage(currentPageId);
@@ -35,15 +34,7 @@ export default function Home() {
     (pageId: PageId) => {
       if (pageId === currentPageId) return;
       setHighlightedId(null);
-      setTransitionState("exiting");
-      window.setTimeout(() => {
-        setCurrentPageId(pageId);
-        if (mainRef.current) mainRef.current.scrollTop = 0;
-        setTransitionState("entering");
-        window.setTimeout(() => {
-          setTransitionState("idle");
-        }, 500);
-      }, 300);
+      setCurrentPageId(pageId);
     },
     [currentPageId],
   );
@@ -60,7 +51,7 @@ export default function Home() {
     (pageId: PageId, sectionId: string) => {
       if (pageId !== currentPageId) {
         navigateTo(pageId);
-        window.setTimeout(() => highlightSection(sectionId), 900);
+        window.setTimeout(() => highlightSection(sectionId), 750);
       } else {
         highlightSection(sectionId);
       }
@@ -133,31 +124,35 @@ export default function Home() {
     }
   };
 
-  const pageAnimClass =
-    transitionState === "exiting"
-      ? "page-exiting"
-      : transitionState === "entering"
-        ? "page-entering"
-        : "";
-
   return (
     <div className="h-screen bg-white text-slate-900 overflow-hidden flex flex-col">
       <Header currentPage={currentPage.num} totalPages={PAGES.length} />
       <div className="flex-1 flex overflow-hidden">
         <Sidebar currentPageId={currentPageId} onNavigate={navigateTo} />
-        <main ref={mainRef} className="flex-1 overflow-y-auto">
-          <div className="max-w-4xl mx-auto px-12 py-12">
-            <div className={pageAnimClass} key={currentPageId}>
-              {renderPage()}
-              <PageNav
-                currentNum={currentPage.num}
-                total={PAGES.length}
-                onPrev={handlePrev}
-                onNext={handleNext}
-              />
+        <MainScrollContext.Provider value={mainRef}>
+          <main ref={mainRef} className="flex-1 overflow-y-auto">
+            <div className="max-w-4xl mx-auto px-12 py-12">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={currentPageId}
+                  className="will-change-transform"
+                  variants={pageMorphVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                >
+                  {renderPage()}
+                  <PageNav
+                    currentNum={currentPage.num}
+                    total={PAGES.length}
+                    onPrev={handlePrev}
+                    onNext={handleNext}
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
-          </div>
-        </main>
+          </main>
+        </MainScrollContext.Provider>
       </div>
 
       <ChatPanel

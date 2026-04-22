@@ -55,42 +55,6 @@ body {
   padding-left: 1.5rem;
 }
 
-/* ---------- Page transition (Zoom + Fade) ---------- */
-
-@keyframes page-enter {
-  0% {
-    opacity: 0;
-    transform: scale(1.08);
-    filter: blur(4px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
-}
-
-@keyframes page-exit {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.94);
-    filter: blur(4px);
-  }
-}
-
-.page-entering {
-  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.page-exiting {
-  animation: page-exit 0.3s cubic-bezier(0.64, 0, 0.78, 0) forwards;
-}
-
 /* ---------- Fade up ---------- */
 
 @keyframes fade-up {

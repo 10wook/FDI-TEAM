@@ -1,7 +1,26 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Sparkles, ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/shared/SectionWrapper";
+import IntroPageHeroParallax from "@/components/pages/IntroPageHeroParallax";
 import { SUGGESTED_QUESTIONS } from "@/lib/suggestions";
 import type { PageId } from "@/lib/pages";
+
+const introHero = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+} as const;
+
+const introItem = {
+  hidden: { opacity: 0, y: 28, filter: "blur(6px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+  },
+} as const;
 
 type Props = {
   highlightedId: string | null;
@@ -16,32 +35,52 @@ export default function IntroPage({
 }: Props) {
   return (
     <div>
-      <div className="relative -mx-12 -mt-12 px-12 pt-12 pb-20 mb-16 grid-bg">
-        <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium mb-8">
+      <IntroPageHeroParallax className="relative -mx-12 -mt-12 px-12 pt-12 pb-20 mb-16 overflow-hidden">
+        <motion.div
+          className="max-w-4xl"
+          initial="hidden"
+          animate="show"
+          variants={introHero}
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium mb-8"
+            variants={introItem}
+          >
             <Sparkles className="w-3 h-3" />
             FDI 2026 Symposium · Track 5
-          </div>
-          <h1 className="font-display text-7xl font-medium text-slate-900 tracking-tight leading-[1.05] mb-6">
+          </motion.div>
+          <motion.h1
+            className="font-display text-7xl font-medium text-slate-900 tracking-tight leading-[1.05] mb-6"
+            variants={introItem}
+          >
             Building
             <br />
             <span className="text-blue-600">AI Data Infrastructure</span>
-          </h1>
-          <p className="text-2xl font-display text-slate-700 leading-snug max-w-2xl mb-10 italic">
+          </motion.h1>
+          <motion.p
+            className="text-2xl font-display text-slate-700 leading-snug max-w-2xl mb-10 italic"
+            variants={introItem}
+          >
             &quot;ChatGPT는 똑똑한데,
             <br />왜 우리 회사 일은 못 도와줄까?&quot;
-          </p>
-          <button
-            onClick={() => onNavigate("challenge")}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors group"
-          >
-            학습 시작하기
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
-      </div>
+          </motion.p>
+          <motion.div variants={introItem}>
+            <button
+              onClick={() => onNavigate("challenge")}
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors group"
+            >
+              학습 시작하기
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </motion.div>
+        </motion.div>
+      </IntroPageHeroParallax>
 
-      <SectionWrapper id="chat-tutorial" highlightedId={highlightedId}>
+      <SectionWrapper
+        id="chat-tutorial"
+        highlightedId={highlightedId}
+        revealIndex={0}
+      >
         <div className="bg-blue-50/40 border border-blue-100 rounded-2xl p-8">
           <div className="flex items-start gap-4 mb-6">
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
@@ -92,6 +131,7 @@ export default function IntroPage({
         id="session-info"
         highlightedId={highlightedId}
         className="mt-12"
+        revealIndex={1}
       >
         <div className="grid grid-cols-3 gap-6">
           <div className="border-l-2 border-slate-200 pl-4">
