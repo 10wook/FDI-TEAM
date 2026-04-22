@@ -8,23 +8,36 @@ import type { CarouselImage } from "@/lib/types";
 type Props = {
   images: CarouselImage[];
   ariaLabel?: string;
+  /** 0이면 자동 전환이 꺼짐. 밀리초(기본 2000) */
+  autoIntervalMs?: number;
 };
 
 export default function ImageCarousel({
   images,
   ariaLabel = "이미지 캐러셀",
+  autoIntervalMs = 2000,
 }: Props) {
   const [index, setIndex] = useState(0);
   const total = images.length;
   const rootRef = useRef<HTMLDivElement>(null);
 
   const goPrev = useCallback(() => {
-    setIndex((i) => Math.max(0, i - 1));
-  }, []);
+    if (total <= 0) return;
+    setIndex((i) => (i - 1 + total) % total);
+  }, [total]);
 
   const goNext = useCallback(() => {
-    setIndex((i) => Math.min(total - 1, i + 1));
+    if (total <= 0) return;
+    setIndex((i) => (i + 1) % total);
   }, [total]);
+
+  useEffect(() => {
+    if (total <= 1 || !autoIntervalMs) return;
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % total);
+    }, autoIntervalMs);
+    return () => window.clearInterval(id);
+  }, [total, autoIntervalMs]);
 
   useEffect(() => {
     const el = rootRef.current;
@@ -51,8 +64,7 @@ export default function ImageCarousel({
   }
 
   const current = images[index];
-  const isFirst = index === 0;
-  const isLast = index === total - 1;
+  const single = total <= 1;
   const needsReview = current.caption?.includes("[확인 필요]");
   const displayCaption = needsReview
     ? current.caption?.replace("[확인 필요]", "").trim()
@@ -68,23 +80,39 @@ export default function ImageCarousel({
       className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl"
     >
       <div className="relative">
-        <div className="aspect-video bg-slate-50 border border-slate-200 rounded-xl overflow-hidden">
-          <div key={index} className="w-full h-full carousel-fade relative">
-            <Image
-              src={current.src}
-              alt={current.alt}
-              fill
-              sizes="(max-width: 1024px) 100vw, 768px"
-              className="object-contain"
-              priority={index === 0}
-            />
+        <div className="relative aspect-video bg-slate-50 border border-slate-200 rounded-xl overflow-hidden">
+          <div
+            className="carousel-track flex h-full w-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none will-change-transform"
+            style={{
+              width: `${total * 100}%`,
+              transform: `translate3d(-${(index * 100) / total}%, 0, 0)`,
+            }}
+          >
+            {images.map((item, i) => (
+              <div
+                key={item.src}
+                className="h-full flex-shrink-0"
+                style={{ width: `${100 / total}%` }}
+              >
+                <div className="relative h-full w-full">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 768px"
+                    className="object-contain"
+                    priority={i === 0}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
         <button
           type="button"
           onClick={goPrev}
-          disabled={isFirst}
+          disabled={single}
           aria-label="이전 이미지"
           className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center hover:border-blue-400 hover:shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:shadow-md"
         >
@@ -94,7 +122,7 @@ export default function ImageCarousel({
         <button
           type="button"
           onClick={goNext}
-          disabled={isLast}
+          disabled={single}
           aria-label="다음 이미지"
           className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-md flex items-center justify-center hover:border-blue-400 hover:shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:shadow-md"
         >

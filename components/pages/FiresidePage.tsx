@@ -98,8 +98,9 @@ export default function FiresidePage({ highlightedId }: Props) {
       <SectionWrapper id="fireside-demo" highlightedId={highlightedId}>
         <SubHeading accent="blue">Live Demo</SubHeading>
         <ContentComingSoon
-          title="Fireside 모바일 사용 시연 준비 중"
-          description="실제 시연 영상이 준비되는 대로 이 영역에 추가됩니다."
+          variant="mediaSlot"
+          title="모바일 시연 캡처·영상 미정"
+          description="Fireside 모바일 사용 시연 캡처나 영상이 준비되면 이 영역에 연결됩니다. 현재는 자리만 확보한 상태입니다."
         />
       </SectionWrapper>
     </div>

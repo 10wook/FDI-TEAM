@@ -109,8 +109,9 @@ export default function WrapsodyPage({ highlightedId }: Props) {
       <SectionWrapper id="live-demo" highlightedId={highlightedId}>
         <SubHeading accent="blue">Live Demo</SubHeading>
         <ContentComingSoon
-          title="Wrapsody 핵심 기능 데모 준비 중"
-          description="실제 시연 영상이 준비되는 대로 이 영역에 추가됩니다."
+          variant="mediaSlot"
+          title="시연 캡처·영상 미정"
+          description="Wrapsody 핵심 기능 시연 캡처 또는 영상이 확정되면 이 영역에 연결됩니다. 현재는 자리만 확보한 상태입니다."
         />
       </SectionWrapper>
     </div>
