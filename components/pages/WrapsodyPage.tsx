@@ -60,14 +60,16 @@ export default function WrapsodyPage({ highlightedId }: Props) {
         group="해결 제시"
         title="Wrapsody 솔루션"
         subtitle="Wrapsody는 데이터 최신화·접근 통제·품질 관리를 인프라 차원에서 자동 해결합니다."
+        labelTone="emerald"
       />
 
       <SectionWrapper
         id="overview"
         highlightedId={highlightedId}
         className="mb-12"
+        highlightNeon="emerald"
       >
-        <div className="bg-cyan-950/25 border border-cyan-500/20 rounded-xl p-8 float-hover">
+        <div className="float-hover float-hover--emerald rounded-xl border border-emerald-500/25 bg-emerald-950/20 p-8">
           <div className="font-display text-2xl font-bold text-slate-100 mb-3">
             AI Challenge를 해결하는 기업 AI Data Infrastructure 솔루션
           </div>
@@ -80,10 +82,15 @@ export default function WrapsodyPage({ highlightedId }: Props) {
 
       <div className="space-y-8 mb-12">
         {techs.map((t) => (
-          <SectionWrapper key={t.id} id={t.id} highlightedId={highlightedId}>
-            <div className="grid grid-cols-3 gap-8 p-6 rounded-xl float-hover bg-slate-900/50 border border-slate-600/50">
+          <SectionWrapper
+            key={t.id}
+            id={t.id}
+            highlightedId={highlightedId}
+            highlightNeon="emerald"
+          >
+            <div className="float-hover float-hover--emerald grid grid-cols-3 gap-8 rounded-xl border border-emerald-500/20 bg-slate-900/50 p-6">
               <div className="col-span-1">
-                <div className="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">
+                <div className="mb-3 text-xs font-mono uppercase tracking-widest text-emerald-400">
                   {t.label}
                 </div>
                 <h3 className="font-display text-2xl font-bold text-slate-100 mb-3">
@@ -91,11 +98,11 @@ export default function WrapsodyPage({ highlightedId }: Props) {
                 </h3>
                 <p className="text-sm text-slate-300 leading-relaxed">{t.desc}</p>
               </div>
-              <div className="col-span-2 bg-slate-900/40 border border-cyan-500/15 rounded-xl p-6">
+              <div className="col-span-2 rounded-xl border border-emerald-500/20 bg-slate-900/40 p-6">
                 <div className="space-y-3 text-sm">
                   {t.bullets.map((b) => (
                     <div key={b} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
                       <span className="text-slate-300">{b}</span>
                     </div>
                   ))}
@@ -106,10 +113,15 @@ export default function WrapsodyPage({ highlightedId }: Props) {
         ))}
       </div>
 
-      <SectionWrapper id="live-demo" highlightedId={highlightedId}>
-        <SubHeading accent="blue">Live Demo</SubHeading>
+      <SectionWrapper
+        id="live-demo"
+        highlightedId={highlightedId}
+        highlightNeon="emerald"
+      >
+        <SubHeading accent="emerald">Live Demo</SubHeading>
         <ContentComingSoon
           variant="mediaSlot"
+          mediaSlotNeon="emerald"
           title="시연 캡처·영상 미정"
           description="Wrapsody 핵심 기능 시연 캡처 또는 영상이 확정되면 이 영역에 연결됩니다. 현재는 자리만 확보한 상태입니다."
         />

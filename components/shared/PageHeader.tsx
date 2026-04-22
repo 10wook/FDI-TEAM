@@ -24,9 +24,21 @@ type Props = {
   title: string;
   subtitle?: string;
   group: string;
+  /** Chapter 라벨(기본 시안) — emerald 시 초록 네온 */
+  labelTone?: "cyan" | "emerald";
 };
 
-export default function PageHeader({ num, title, subtitle, group }: Props) {
+export default function PageHeader({
+  num,
+  title,
+  subtitle,
+  group,
+  labelTone = "cyan",
+}: Props) {
+  const labelClass =
+    labelTone === "emerald"
+      ? "text-emerald-400/90"
+      : "text-cyan-400/90";
   return (
     <motion.div
       className="mb-12"
@@ -39,7 +51,9 @@ export default function PageHeader({ num, title, subtitle, group }: Props) {
         className="flex items-center gap-3 mb-4"
         variants={headerItem}
       >
-        <span className="text-xs font-mono uppercase tracking-widest text-cyan-400/90">
+        <span
+          className={`text-xs font-mono uppercase tracking-widest ${labelClass}`}
+        >
           Chapter {String(num).padStart(2, "0")} · {group}
         </span>
       </motion.div>

@@ -14,6 +14,8 @@ const config: Config = {
           "0 0 20px -4px rgba(232, 121, 249, 0.4), inset 0 0 0 1px rgba(34, 211, 238, 0.12)",
         "neon-soft":
           "0 0 32px -12px rgba(34, 211, 238, 0.2), 0 4px 24px -8px rgba(0,0,0,0.5)",
+        "neon-emerald":
+          "0 0 24px -4px rgba(52, 211, 153, 0.45), 0 0 8px -2px rgba(16, 185, 129, 0.3), inset 0 0 0 1px rgba(52, 211, 153, 0.12)",
       },
       fontFamily: {
         sans: ["Pretendard", "system-ui", "-apple-system", "sans-serif"],
